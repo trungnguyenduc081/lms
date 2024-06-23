@@ -3,12 +3,13 @@
 namespace Database\Factories;
 
 use App\Models\ClassModel;
+use App\Models\Student;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\StudentsInClass>
  */
-class AssignmentFactory extends Factory
+class StudentsInClassFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,10 +19,9 @@ class AssignmentFactory extends Factory
     public function definition(): array
     {
         return [
+            'user_id'=>Student::inRandomOrder()->first()->user_id,
             'class_id'=>ClassModel::inRandomOrder()->first()->id,
-            'title'=>fake()->text(10),
-            'description'=>fake()->text('100'),
-            'due_date'=>fake()->date('Y-m-d')
+            'start_on'=>date('Y-m-d')
         ];
     }
 }

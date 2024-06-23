@@ -18,7 +18,7 @@ class CourseFactory extends Factory
     {
         return [
             'course_name' => fake()->name(),
-            'description' => fake()->realText(),
+            'description' => fake()->realText(20),
         ];
     }
 }

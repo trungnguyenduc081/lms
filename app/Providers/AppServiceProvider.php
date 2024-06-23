@@ -31,7 +31,15 @@ class AppServiceProvider extends ServiceProvider
 
         foreach(config('permission.basic') as $key=>$permission){
             Gate::define($key, function (User $user) use ($key) {
-                return (in_array($key, $user->permissions) === true || $user->id == 1);
+                if($user->id == 1){
+                    return true;
+                }
+
+                if(!is_array($user->permissions)){
+                    return false;
+                }
+                
+                return (in_array($key, $user->permissions) === true);
             });
         }
     }

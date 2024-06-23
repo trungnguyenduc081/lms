@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\ClassModel;
+use App\Models\Student;
+use App\Models\StudentsInClass;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,9 +20,11 @@ class AttendanceFactory extends Factory
      */
     public function definition(): array
     {
+        $studentInClass = StudentsInClass::inRandomOrder()->first();
+        
         return [
-            'user_id'=>User::factory(),
-            'class_id'=>ClassModel::Factory(),
+            'user_id'=>$studentInClass->user_id,
+            'class_id'=>$studentInClass->class_id,
             'date'=>fake()->date(),
             'note'=>fake()->text(100),
             'status'=>0

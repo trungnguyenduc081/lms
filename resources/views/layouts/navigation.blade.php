@@ -37,7 +37,7 @@
                                 </x-dropdown-link>
                                 @endcan
                                 
-                                @can('classe')
+                                @can('class')
                                 <x-dropdown-link :href="route('classes.index')">
                                     {{ __('Classes') }}
                                 </x-dropdown-link>
@@ -93,7 +93,7 @@
                         </x-dropdown>
                     </div>
                     @can('admin')
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('users.index')">
+                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
                         {{ __('Admin') }}
                     </x-nav-link>
                     @endcan
