@@ -15,6 +15,88 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    <div class="inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out">
+                        <x-dropdown>
+                            <x-slot name="trigger">
+                                <button class="inline-flex items-center py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                    <div>{{ __('Courses') }}</div>
+
+                                    <div class="ms-1">
+                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </button>
+                            </x-slot>
+
+                            <x-slot name="content">
+                                @can('course')
+                                <x-dropdown-link :href="route('courses.index')">
+                                    {{ __('Courses') }}
+                                </x-dropdown-link>
+                                @endcan
+                                
+                                @can('classe')
+                                <x-dropdown-link :href="route('classes.index')">
+                                    {{ __('Classes') }}
+                                </x-dropdown-link>
+                                @endcan
+
+                                @can('attendance')
+                                <x-dropdown-link :href="route('attendances.v2')">
+                                    {{ __('Attendances') }}
+                                </x-dropdown-link>
+                                @endcan
+
+                                @can('assignment')
+                                <x-dropdown-link :href="route('assignments.index')">
+                                    {{ __('Assignments') }}
+                                </x-dropdown-link>
+                                @endcan
+
+                                @can('submission')
+                                <x-dropdown-link :href="route('submissions.index')">
+                                    {{ __('Submissions') }}
+                                </x-dropdown-link>
+                                @endcan
+                            </x-slot>
+                        </x-dropdown>
+                    </div>
+
+                    <div class="inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out">
+                        <x-dropdown>
+                            <x-slot name="trigger">
+                                <button class="inline-flex items-center py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                    <div>{{ __('Users') }}</div>
+
+                                    <div class="ms-1">
+                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </button>
+                            </x-slot>
+
+                            <x-slot name="content">
+                                @can('teacher')
+                                <x-dropdown-link :href="route('teachers.index')">
+                                    {{ __('Teachers') }}
+                                </x-dropdown-link>
+                                @endcan
+                                @can('student')
+                                <x-dropdown-link :href="route('students.index')">
+                                    {{ __('Students') }}
+                                </x-dropdown-link>
+                                @endcan
+                            </x-slot>
+                        </x-dropdown>
+                    </div>
+                    @can('admin')
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('users.index')">
+                        {{ __('Admin') }}
+                    </x-nav-link>
+                    @endcan
                 </div>
             </div>
 

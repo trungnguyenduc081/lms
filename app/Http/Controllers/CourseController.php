@@ -6,6 +6,9 @@ use App\Models\Course;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\CourseRequest;
+use App\Models\ClassModel;
+use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -76,9 +79,40 @@ class CourseController extends Controller
 
     public function destroy($id): RedirectResponse
     {
-        Course::find($id)->delete();
+
+        $course = Course::findOrFail($id);
+
+        $class = ClassModel::query()
+        ->where('course_id', $id)
+        ->count();
+
+        if($class > 0){
+            return back()->with('error-message', 'Can not remove course "'.$course->course_name.'" since it is in a class');
+        }
+
+        $course->delete();
 
         return Redirect::route('courses.index')
             ->with('success', 'Course deleted successfully');
+    }
+
+    public function searchCourses():JsonResponse{
+        $term = request('term', '');
+        $matchedCourses = Course::query()
+        ->where("course_name", "like", "%{$term}%")
+        ->limit(100)
+        ->get();
+
+        $courses = [];
+        foreach($matchedCourses as $course){
+            $courses[] = ['id'=>$course->id, 'text'=>$course->course_name];
+        }
+    
+        return response()->json([
+            'results'=>$courses, 
+            "pagination"=> [
+                "more"=> false
+                ]
+            ]);
     }
 }
